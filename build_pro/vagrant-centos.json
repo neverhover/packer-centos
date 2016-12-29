@@ -1,0 +1,76 @@
+{
+    "variables":
+    {
+	"iso_url": "",
+	"iso_checksum": "",
+	"iso_checksum_type": "",
+	"guest_additions_path": "",
+	"redhat_release": "",
+	"disk_size":"",
+	"vm_version":"",
+	"vm_description":"",
+	"vendor":"",
+	"vendor_url":"",
+	"product": ""
+    },
+
+    "builders": [
+	{
+	    "type": "virtualbox-ovf",
+	    "vm_name": "centos-vm-{{user `vm_version`}}",
+	    "boot_wait": "10s",
+
+	    "source_path": "{{user `iso_url`}}",
+	    "checksum": "{{user `iso_checksum`}}",
+	    "checksum_type": "{{user `iso_checksum_type`}}",
+	    "shutdown_command": "echo 'portal'|sudo -S /sbin/halt -h -p",
+	    "shutdown_timeout" : "10s",
+	    "ssh_username": "vagrant",
+	    "ssh_password": "portal",
+	    "ssh_port": 22,
+	    "ssh_wait_timeout": "60m",
+	    "output_directory": "builds",
+	    "headless": false,
+	    "virtualbox_version_file": ".vbox_version",
+	    "format": "ova",
+	    "import_opts": "keepallmacs",
+	    "export_opts":[
+		"--manifest",
+    		"--vsys", "0",
+		"--description", "{{user `vm_description`}}",
+		"--version", "{{user `vm_version`}}",
+		"--vendor",  "{{user `vendor`}}",
+		"--vendorurl", "{{user `vendor_url`}}",
+		"--product",  "{{user `product`}}"
+	    ]
+	}
+    ],
+
+    "provisioners": [
+	{
+	    "type": "file",
+	    "source": "pkgs",
+	    "destination": "/opt"
+	},
+	{
+	    "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+	    "type": "shell",
+	    "override": {
+		"virtualbox-ovf": {
+		    "scripts": [
+			"../scripts/install_update.sh",
+			"../scripts/cleanup.sh"
+		    ]
+		}
+	    }
+	}
+    ],
+    "post-processors": [
+	{
+	    "type": "checksum",
+	    "checksum_types": "sha256",
+	    "output": "sha256"
+	}
+    ]
+
+}

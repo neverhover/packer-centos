@@ -1,0 +1,8 @@
+{
+  "iso_url": "/mnt/sdd1/CentOS-6.5-x86_64-bin-DVD1.iso",
+  "iso_checksum": "c796ab378319393f47b29acd8ceaf21e1f48439570657945226db61702a4a2a1",
+  "iso_checksum_type": "sha256",
+  "guest_additions_path": "VBoxGuestAdditions.iso",
+  "redhat_release": "6.5",
+  "disk_size": "10000"
+}

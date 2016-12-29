@@ -1,0 +1,13 @@
+{
+  "type": "virtualbox-ovf",
+  "iso_url": "../build_base/builds/centos-vm-v2.5.14-base.ova",
+  "iso_checksum": "5228ed1db4bcfd2c612e2fdef946ffe24a44ddaeb06757731b41086d2b4e5ad1",
+  "iso_checksum_type": "sha256",
+  "guest_additions_path": "VBoxGuestAdditions.iso",
+  "redhat_release": "6.8",
+  "disk_size": "10000",
+  "vm_version": "v2.5.14-env",
+  "vendor":"natshell",
+  "vendor_url":"www.natshell.com",
+  "product":"portal_system"
+}
